@@ -1,26 +1,171 @@
 @import "tailwindcss";
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary-foreground: 210 40% 98%
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 267 100% 50%;
+    --radius: 0.5rem;
+    --primary: #9013FE;
+    --primary-light: #A29BFE;
+    --secondary: #FF8687;
+    --dark: #2D3436;
+    --light: #F5F6FA;
+    --success: #00B894;
+    --warning: #FDCB6E;
+    --danger: #D63031;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 267 100% 50%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 267 100% 50%;
   }
 }
+
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+} 
+
+
+.logo {
+  color: #7C4DFF;
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo svg {
+  margin-right: 10px;
+  width: 28px;
+  height: 28px;
+}
+
+
+
+.auth-card {
+  @apply w-full max-w-md p-6 rounded-xl shadow-sm border border-gray-100 bg-white;
+  position: relative;
+  overflow: hidden;  
+}
+
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    #7C4DFF 0%,
+    #FF80AB 100%
+  );
+}
+
+.auth-header {
+  @apply flex flex-col items-center mb-8 mt-4;
+}
+
+.auth-title {
+  @apply text-[22px] font-semibold text-[#616161] mt-6;
+}
+
+.auth-form {
+  @apply space-y-6;
+}
+
+.auth-input-group {
+  @apply space-y-2;
+}
+
+.auth-label {
+  @apply block text-[#616161] font-medium;
+}
+
+.auth-input {
+  @apply w-full px-4 py-3 rounded-xl bg-[#fafafa] border border-[#e0e0e0] focus:outline-none focus:ring-2 focus:ring-[#7C4DFF] focus:border-transparent;
+}
+
+.auth-input:focus {
+  border-color: #7C4DFF;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2);
+  background-color: white;
+}
+
+
+.auth-button {
+  @apply w-full cursor-pointer py-3 rounded-xl bg-[#7C4DFF] text-white font-medium flex items-center justify-center gap-2 hover:bg-[#651FFF] transition-colors duration-400 ease-in-out hover:transform hover:translate-y-[-2px];
+}
+
+.auth-divider {
+  @apply flex items-center my-4;
+}
+
+.auth-divider-line {
+  @apply flex-grow border-t border-gray-200;
+}
+
+.auth-divider-text {
+  @apply px-4 text-gray-500 text-sm;
+}
+
+.auth-link {
+  @apply text-[#7C4DFF] hover:text-[#7C4DFF] hover:underline font-medium transition-colors;
+}
+
+.auth-footer {
+  @apply text-center mt-6 text-[#757575] text-sm;
+}
+
+.auth-alert {
+  @apply p-3 rounded-xl mb-4 border-l-4;
+}
+
+.auth-alert-success {
+  @apply bg-green-50 border-green-500 text-green-700;
+}
+
+.auth-alert-error {
+  @apply bg-red-50 border-red-500 text-red-700;
 }
