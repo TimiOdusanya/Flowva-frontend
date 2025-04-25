@@ -13,75 +13,76 @@ import { loginAPI } from '@/api/endpoints/auth'
 import { saveToken } from "@/utils/auth"
 
 export default function SignInForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
-  const [googleLoading, setGoogleLoading] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
+    const [googleLoading, setGoogleLoading] = useState(false)
     const [success, setSuccess] = useState("")
-     const [error, setError] = useState("")
-  const router = useRouter()
-  const { toast } = useToast()
-
-console.log(status)
-const mutation = useMutation({
-    mutationFn: loginAPI,
-    onMutate: () => {
-      setStatus("loading") 
-      setSuccess("Signing in...");
-    },
-    onSuccess: (response) => {
-      if (response?.accessToken) {
-        saveToken(response.accessToken);
-      }
-      
-      setStatus("success")
-      setSuccess("Welcome back!, Redirecting...")
-      toast({
-        title: "Success",
-        description: "Account login successful!",
-      })
-      router.push("/dashboard")
-    },
-    onError: (error: any) => {
-      setSuccess("");
-      const errorMessage = error?.data?.message || "An unexpected error occurred. Please try again."
-      setError(errorMessage)
-    },
-  })
-
-  const handleSignIn = (e: React.FormEvent) => {
-    e.preventDefault()
-    mutation.mutate({ email, password })
-  }
-
-  return (
-    <div className="auth-card">
-      <div className="auth-header">
-        <Logo />
-        <h2 className="auth-title">Welcome back</h2>
-      </div>
-
-      {googleLoading && (
-        <div
-          className="auth-alert border-[#4CAF50] text-[#4CAF50]"
-          style={{ backgroundColor: "rgba(76, 175, 80, 0.1)" }}
-        >
-          <p>Redirecting to Google...</p>
+    const [error, setError] = useState("")
+    const router = useRouter()
+    const { toast } = useToast()
+  
+    console.log(status)
+    const mutation = useMutation({
+      mutationFn: loginAPI,
+      onMutate: () => {
+        setStatus("loading");
+        setGoogleLoading(false);
+        setSuccess("Signing in...");
+        setError("");
+      },
+      onSuccess: (response) => {
+        if (response?.accessToken) {
+          saveToken(response.accessToken);
+        }
+        setStatus("success");
+        setSuccess("Welcome back!, Redirecting...");
+        toast({
+          title: "Success",
+          description: "Account login successful!",
+        });
+        router.push("/dashboard");
+      },
+      onError: (error: any) => {
+        setSuccess("");
+        const errorMessage = error?.data?.message || "An unexpected error occurred. Please try again.";
+        setError(errorMessage);
+      },
+    })
+  
+    const handleSignIn = (e: React.FormEvent) => {
+      e.preventDefault()
+      mutation.mutate({ email, password })
+    }
+  
+    return (
+      <div className="auth-card">
+        <div className="auth-header">
+          <Logo />
+          <h2 className="auth-title">Welcome back</h2>
         </div>
-      )}
-
-      {error && (
-        <div className="auth-alert auth-alert-error">
-          <p>{error}</p>
-        </div>
-      )}
-
-      {success && (
-        <div className="auth-alert auth-alert-success">
-          <p>{success}</p>
-        </div>
-      )}
+  
+        {googleLoading && (
+          <div
+            className="auth-alert border-[#4CAF50] text-[#4CAF50]"
+            style={{ backgroundColor: "rgba(76, 175, 80, 0.1)" }}
+          >
+            <p>Redirecting to Google...</p>
+          </div>
+        )}
+  
+        {error && (
+          <div className="auth-alert auth-alert-error">
+            <p>{error}</p>
+          </div>
+        )}
+  
+        {success && (
+          <div className="auth-alert auth-alert-success">
+            <p>{success}</p>
+          </div>
+        )}
 
       <form className="auth-form" onSubmit={handleSignIn}>
         <div className="auth-input-group">
